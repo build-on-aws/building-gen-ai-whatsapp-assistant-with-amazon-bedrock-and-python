@@ -1,4 +1,4 @@
-# Building a generative AI WhatsApp assistant with Amazon Bedrock and Python.
+# Building a WhatsApp generative AI assistant with Amazon Bedrock and Python.
 
 This app is integrated to WhatsApp, enabling you to chat with an [Large language models (LLM)](https://community.aws/posts/how-to-choose-your-llm) on Amazon Bedrock. Send voice notes and receive transcriptions. With just a small tweak in the code, you can send the transcription to the model too.
 
