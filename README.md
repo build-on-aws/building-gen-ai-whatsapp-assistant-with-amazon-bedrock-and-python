@@ -237,15 +237,25 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 
 ## Conclusion: 
 
-In this tutorial, you learned how to deploy a serverless WhatsApp application that allows users to interact with an LLM through Amazon Bedrock. This architecture uses API Gateway as a connection between WhatsApp and the application. Amazon Lambda functions process code to handle conversations. Amazon DynamoDB tables manage and store message information, session details, and conversation history.
+In this tutorial, you deployed a serverless WhatsApp application that allows users to interact with an LLM through Amazon Bedrock. This architecture uses API Gateway as a connection between WhatsApp and the application. Amazon Lambda functions process code to handle conversations. Amazon DynamoDB tables manage and store message information, session details, and conversation history.
 
-You now have the essential code to improve the application. One option moving forward is to incorporate RAG to generate more sophisticated responses depending on the context.
+You now have the essential code to improve the application. One option moving forward is to incorporate [Retrieval-Augmented Generation (RAG)](https://aws.amazon.com/what-is/retrieval-augmented-generation/?nc1=h_ls) to generate more sophisticated responses depending on the context.
 
-To handle customer service scenarios, the application could connect to Amazon Connect and transfer calls to an agent if the LLM cannot resolve an issue.
+To handle customer service scenarios, the application could connect to [Amazon Connect](https://aws.amazon.com/connect/features/) and transfer calls to an agent if the LLM cannot resolve an issue.
 
 With further development, this serverless architecture demonstrates how conversational AI can power engaging and useful chat experiences on popular messaging platforms.
 
 ## 🚨 Did you like this blog? 👩🏻‍💻 Do you have comments?🎤 tell me everything[here](https://www.pulse.aws/survey/6V3IYE9H)
+
+## 🚀 Some links for you to continue learning and building:
+
+- [Get started with Amazon Connect](https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-get-started.html)
+- [Elevating Customer Support With a Whatsapp Assistant.](https://community.aws/content/2bgPgouKvLhinu8bcE4LZQ1nnwv/elevating-customer-support-with-a-whatsapp-travel-assistant-from-las-vegas-mexico-to-las-vegas-nevada-a-re-invent-2023-history)
+- [RAG with history memory agents using Amazon Bedrock, Amazon Kendra, Amazon Lambda Function, and Amazon DynamoDB](https://github.com/build-on-aws/qa-agent-with-bedrock-kendra-and-history-memory)
+- [How To Choose Your LLM](https://community.aws/posts/how-to-choose-your-llm)
+- [Working With Your Live Data Using LangChain](https://community.aws/posts/working-with-your-live-data-using-langchain)
+
+
 
 ----
 
