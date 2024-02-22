@@ -1,10 +1,4 @@
-# Open Source Private Assistant on AWS
-
-
-🇻🇪🇨🇱 [Dev.to](https://dev.to/elizabethfuentes12) [Linkedin](https://www.linkedin.com/in/lizfue/) [GitHub](https://github.com/elizabethfuentes12/) [Twitter](https://twitter.com/elizabethfue12) [Instagram](https://www.instagram.com/elifue.tech) [Youtube](https://www.youtube.com/channel/UCr0Gnc-t30m4xyrvsQpNp2Q)
-[Linktr](https://linktr.ee/elizabethfuentesleone)
-
----
+# Building a generative AI WhatsApp assistant with Amazon Bedrock and Python.
 
 This app is integrated to WhatsApp, enabling you to chat with an LLM on Amazon Bedrock. Send voice notes and receive transcriptions. With just a small tweak in the code, you can send the transcription to the model too.
 
@@ -241,14 +235,21 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
 
+## Conclusion: 
+
+In this tutorial, you learned how to deploy a serverless WhatsApp application that allows users to interact with an LLM through Amazon Bedrock. This architecture uses API Gateway as a connection between WhatsApp and the application. Amazon Lambda functions process code to handle conversations. Amazon DynamoDB tables manage and store message information, session details, and conversation history.
+
+You now have the essential code to improve the application. One option moving forward is to incorporate RAG to generate more sophisticated responses depending on the context.
+
+To handle customer service scenarios, the application could connect to Amazon Connect and transfer calls to an agent if the LLM cannot resolve an issue.
+
+With further development, this serverless architecture demonstrates how conversational AI can power engaging and useful chat experiences on popular messaging platforms.
+
 ## 🚨 Did you like this blog? 👩🏻‍💻 Do you have comments?🎤 tell me everything[here](https://www.pulse.aws/survey/6V3IYE9H)
 
 ----
 
-## ¡Gracias!
-
-🇻🇪🇨🇱 [Dev.to](https://dev.to/elizabethfuentes12) [Linkedin](https://www.linkedin.com/in/lizfue/) [GitHub](https://github.com/elizabethfuentes12/) [Twitter](https://twitter.com/elizabethfue12) [Instagram](https://www.instagram.com/elifue.tech) [Youtube](https://www.youtube.com/channel/UCr0Gnc-t30m4xyrvsQpNp2Q)
-[Linktr](https://linktr.ee/elizabethfuentesleone)
+## 🇻🇪🇨🇱 ¡Gracias!
 
 ---
 
