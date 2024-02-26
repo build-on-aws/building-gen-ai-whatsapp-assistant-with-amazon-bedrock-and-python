@@ -1,6 +1,6 @@
 # Building a WhatsApp generative AI assistant with Amazon Bedrock and Python.
 
-With this WhatsApp app, you can chat in any language with an [Large language models (LLM)](https://community.aws/posts/how-to-choose-your-llm) on Amazon Bedrock. Send voice notes and receive transcriptions. By making a minor change in the code, you can also send the transcription to the model.
+With this WhatsApp app, you can chat in any language with a [Large language models (LLM)](https://community.aws/posts/how-to-choose-your-llm) on Amazon Bedrock. Send voice notes and receive transcriptions. By making a minor change in the code, you can also send the transcription to the model.
 
 Your data will be securely stored in your AWS account and will not be shared or used for model training. It is not recommended to share private information because the security of data with WhatsApp is not guaranteed.
 
@@ -232,8 +232,19 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 ![Digrama parte 1](/imagenes/webhook.png)
 
 ----
+## Enjoy the app!:
+
+✅  Chat and ask follow-up questions. Test your multi-language skills.
+
+![Digrama parte 1](/imagenes/memory.gif)
+
+✅ Send and transcribe voice notes. Test the app's capabilities for transcribing multiple languages.
+
+![Digrama parte 1](/imagenes/voice-note.gif)
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
+
+
 
 ## Conclusion: 
 
@@ -245,7 +256,7 @@ To handle customer service scenarios, the application could connect to [Amazon C
 
 With further development, this serverless architecture demonstrates how conversational AI can power engaging and useful chat experiences on popular messaging platforms.
 
-## 🚨 Did you like this blog? 👩🏻‍💻 Do you have comments?🎤 tell me everything[here](https://www.pulse.aws/survey/6V3IYE9H)
+## 🚨 Did you like this blog? 👩🏻‍💻 Do you have comments?🎤 tell me every thing[here](https://www.pulse.aws/survey/6V3IYE9H)
 
 ## 🚀 Some links for you to continue learning and building:
 
