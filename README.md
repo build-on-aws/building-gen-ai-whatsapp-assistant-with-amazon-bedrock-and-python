@@ -140,7 +140,7 @@ The following is a friendly conversation between a human and an AI.
 ✅ **Clone the repo**
 
 ```
-git clone https://github.com/elizabethfuentes12/aws-private-assistant
+git clone https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python
 ```
 
 ✅ **Go to**: 
