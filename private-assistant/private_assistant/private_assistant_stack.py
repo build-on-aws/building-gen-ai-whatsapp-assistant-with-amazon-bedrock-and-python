@@ -28,7 +28,10 @@ class PrivateAssistantStack(Stack):
         TABLE_CONFIG = dict (removal_policy=REMOVAL_POLICY, billing_mode= ddb.BillingMode.PAY_PER_REQUEST)
         AudioKeyName = "audio-from-whatsapp"
         TextBucketName = "text-to-whatsapp"
+        ImageKeyName = "image-from-whatsapp"
         model_id = "anthropic.claude-instant-v1"
+        model_id_v3 = "anthropic.claude-3-sonnet-20240229-v1:0"
+        anthropic_version = "bedrock-2023-05-31"
         
         DISPLAY_PHONE_NUMBER = 'YOU-NUMBER'
 
@@ -47,7 +50,6 @@ class PrivateAssistantStack(Stack):
         Tbl.whatsapp_MetaData.add_global_secondary_index(index_name = 'jobnameindex', 
                                                             partition_key = ddb.Attribute(name="jobName",type=ddb.AttributeType.STRING), 
                                                             projection_type=ddb.ProjectionType.KEYS_ONLY)
-
 
         s3_deploy = S3Deploy(self, "The-transcriber", TextBucketName,TextBucketName)
 
@@ -72,10 +74,11 @@ class PrivateAssistantStack(Stack):
         #Fn.whatsapp_in.add_environment(key='whatsapp_MetaData_follow', value=Tbl.whatsapp_MetaData_follow.table_name)
         #Tbl.whatsapp_MetaData_follow.grant_full_access(Fn.whatsapp_in)
         
-        Fn.process_stream.add_environment( key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name )
-        Fn.process_stream.add_environment( key='JOB_TRANSCRIPTOR_LAMBDA', value=Fn.audio_job_transcriptor.function_name )
+        Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name)
+        Fn.process_stream.add_environment(key='JOB_TRANSCRIPTOR_LAMBDA', value=Fn.audio_job_transcriptor.function_name)
         Fn.process_stream.add_environment(key='whatsapp_MetaData', value=Tbl.whatsapp_MetaData.table_name)
-        
+        Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_IMAGE', value=Fn.agent_image_v3.function_name)
+
         
         Fn.process_stream.add_event_source(
             aws_lambda_event_sources.DynamoEventSource(table=Tbl.whatsapp_MetaData,
@@ -89,8 +92,9 @@ class PrivateAssistantStack(Stack):
         Fn.whatsapp_out.add_environment(key='ENV_KEY_NAME', value="messages_id")
 
         Fn.whatsapp_out.grant_invoke(Fn.langchain_agent_text)
+        Fn.whatsapp_out.grant_invoke(Fn.agent_image_v3)
+        Fn.whatsapp_out.grant_invoke(Fn.agent_text_v3)
 
-        
         # Amazon Lambda Function audio_job_transcriptor - Config
 
         Fn.audio_job_transcriptor.add_to_role_policy(iam.PolicyStatement( actions=["transcribe:*"], resources=['*']))
@@ -145,6 +149,48 @@ class PrivateAssistantStack(Stack):
         
         Fn.langchain_agent_text.grant_invoke(Fn.process_stream)
         Fn.langchain_agent_text.add_to_role_policy(iam.PolicyStatement( actions=["bedrock:*"], resources=['*']))
+
+        # agent_image_v3
+
+        Tbl.session_table_history.grant_full_access(Fn.agent_image_v3)
+        Fn.agent_image_v3.add_environment(key='session_table_history', value=Tbl.session_table_history.table_name)
+
+        Tbl.whatsapp_MetaData.grant_full_access(Fn.agent_image_v3)
+        Fn.agent_image_v3.add_environment(key='whatsapp_MetaData', value=Tbl.whatsapp_MetaData.table_name)
+
+        Tbl.user_sesion_metadata.grant_full_access(Fn.agent_image_v3)
+        Fn.agent_image_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
+
+        Fn.agent_image_v3.add_environment(key='ENV_MODEL_ID_V3', value=model_id_v3)
+        Fn.agent_image_v3.add_environment(key='ENV_ANTHROPIC_VERSION', value=anthropic_version)
+
+        Fn.agent_image_v3.add_environment(key='BucketName', value=s3_deploy.bucket.bucket_name)
+        Fn.agent_image_v3.add_environment(key='ImageKeyName', value=ImageKeyName)
+
+        Fn.agent_image_v3.add_environment( key='WHATSAPP_OUT', value=Fn.whatsapp_out.function_name )
+
+        Fn.agent_image_v3.add_to_role_policy(iam.PolicyStatement( actions=["bedrock:*"], resources=['*']))
+        Fn.agent_image_v3.grant_invoke(Fn.process_stream)
+
+        s3_deploy.bucket.grant_read_write(Fn.agent_image_v3) 
+
+        # langchain_agent_text
+
+        Tbl.session_table_history.grant_full_access(Fn.agent_text_v3)
+        Fn.agent_text_v3.add_environment(key='session_table_history', value=Tbl.session_table_history.table_name)
+
+        Tbl.whatsapp_MetaData.grant_full_access(Fn.agent_text_v3)
+        Fn.agent_text_v3.add_environment(key='whatsapp_MetaData', value=Tbl.whatsapp_MetaData.table_name)
+
+        Tbl.user_sesion_metadata.grant_full_access(Fn.agent_text_v3)
+        Fn.agent_text_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
+        
+        Fn.agent_text_v3.add_environment(key='ENV_MODEL_ID', value=model_id)
+
+        Fn.agent_text_v3.add_environment( key='WHATSAPP_OUT', value=Fn.whatsapp_out.function_name )
+        
+        Fn.agent_text_v3.grant_invoke(Fn.process_stream)
+        Fn.agent_text_v3.add_to_role_policy(iam.PolicyStatement( actions=["bedrock:*"], resources=['*']))
 
         
 

@@ -72,6 +72,24 @@ class Lambdas(Construct):
             architecture=aws_lambda.Architecture.ARM_64,
             **COMMON_LAMBDA_CONF)
         
+        self.agent_image_v3 = aws_lambda.Function(
+            self, "agent_image_v3", 
+            description ="queries anthropic.claude-3-sonnet - Image" ,
+            handler="lambda_function.lambda_handler",
+            code=aws_lambda.Code.from_asset("./lambdas/code/agent_image_v3"),
+            layers= [Lay.bedrock,Lay.common],
+            architecture=aws_lambda.Architecture.ARM_64,
+            **COMMON_LAMBDA_CONF)
+        
+        self.agent_text_v3 = aws_lambda.Function(
+            self, "agent_text_v3", 
+            description ="queries anthropic.claude-3-sonnet - Text " ,
+            handler="lambda_function.lambda_handler",
+            code=aws_lambda.Code.from_asset("./lambdas/code/agent_text_v3"),
+            layers= [Lay.bedrock,Lay.common],
+            architecture=aws_lambda.Architecture.ARM_64,
+            **COMMON_LAMBDA_CONF)
+        
         """
         self.langchain_agent_audio = aws_lambda.Function(
             self, "langChain_agent_audio", 

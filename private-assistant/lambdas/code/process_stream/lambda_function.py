@@ -68,6 +68,9 @@ def lambda_handler(event, context):
                     if(messageType == 'text'):
                         message = whats_message['text']['body']
                         process_text(message, WHATS_TOKEN,phone,phone_id,messages_id)
+                    elif(messageType == 'image'):
+                        #message = whats_message['image']['body']
+                        process_image(whats_message, WHATS_TOKEN,phone,phone_id,messages_id,messageType)
     
                         
                     # Agregar para respuestas a boton!    
@@ -96,7 +99,36 @@ def lambda_handler(event, context):
         
         return True
 
-            
+def process_image(whats_message, whats_token,phone,phone_id,messages_id,messageType):
+
+    print("text", whats_message, whats_token)
+    LAMBDA_AGENT_IMAGE = os.environ['ENV_LAMBDA_AGENT_IMAGE']
+    
+    try:       
+
+        response_3 = lambda_client.invoke(
+            FunctionName = LAMBDA_AGENT_IMAGE,
+            InvocationType = 'Event' ,#'RequestResponse', 
+            Payload = json.dumps({
+                'whats_message': whats_message,
+                'whats_token': whats_token,
+                'phone': phone,
+                'phone_id': phone_id,
+                'messages_id': messages_id,
+                'type': messageType
+
+            })
+        )
+
+        print(f'\nRespuesta:{response_3}')
+
+        return response_3
+        
+    except ClientError as e:
+        err = e.response
+        error = err
+        print(err.get("Error", {}).get("Code"))
+        return f"Un error invocando {LAMBDA_AGENT_IMAGE}"            
 
 def process_text(whats_message, whats_token,phone,phone_id,messages_id):
 
