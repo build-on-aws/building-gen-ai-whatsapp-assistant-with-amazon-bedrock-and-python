@@ -257,7 +257,7 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 
 ✅ Send and transcribe voice notes. Test the app's capabilities for transcribing multiple languages.
 
-![Digrama parte 1](/imagenes/voice-note.gif)
+![Digrama parte 1](/imagenes/voice-note-2.gif)
 
 ✅ Send photos and test the app's capabilities to describe and identify what's in the images. Play with prompts
 
