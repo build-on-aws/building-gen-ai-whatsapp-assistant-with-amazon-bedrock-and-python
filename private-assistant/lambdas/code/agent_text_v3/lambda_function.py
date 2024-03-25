@@ -8,6 +8,7 @@ import os
 import time
 import base64
 import sys
+import requests
 
 from db_utils import (update_items_out,save_item_ddb,query,update_item_session)
 

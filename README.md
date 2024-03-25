@@ -232,6 +232,107 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 ![Digrama parte 1](/imagenes/webhook.png)
 
 ----
+
+### Step 5: (update) Power multichannel with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1):
+
+This application has two new Lambdas Function that interact with [Claude 3 Sonnet](https://www.anthropic.com/news/claude-3-family), one to create conversations via text and the other for image processing.
+
+- Text: 
+
+AWS Lambda Function [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py)
+
+The python function that invokes the LLm is the following:
+
+```python
+def agent_text(model_id, anthropic_version, text, max_tokens,history):
+    system_prompt = """The following is a friendly conversation between a human and an AI. 
+    The AI is talkative and provides lots of specific details from its context. 
+    If the AI does not know the answer to a question, it truthfully says it does not know.
+    Always reply in the original user language.
+    """
+    boto3_bedrock = boto3.client("bedrock-runtime")
+    content = [{"type":"text","text":text}]
+    new_history = add_text("user",content, history)
+    #text  = '\n'.join([f"<document>{doc.page_content}</document>" for doc in docs])
+    body = {
+        "system": system_prompt,
+        "messages":new_history,"anthropic_version":anthropic_version,
+        "max_tokens":max_tokens}
+    accept = 'application/json'
+    contentType = 'application/json'
+
+    response = boto3_bedrock.invoke_model(
+        body=json.dumps(body), 
+        modelId=model_id, accept=accept, contentType=contentType)
+    response_body = json.loads(response.get('body').read())
+    assistant_text = response_body.get("content")[0].get("text")
+    new_history = add_text("assistant", assistant_text, new_history)
+    return assistant_text, new_history
+```
+
+> ✅ Note that in this case it is not necessary to use lanchaing to manage the conversation, you directly use the Amazon Bedrock invocation. This helps you reduce the memory usage of the Lambda Function since you do not need to install an additional library.
+
+These Python functions maintain the memory usage of conversations:
+
+```python
+# To create or add the Human and Assistant text to the json array that forms the conversation
+
+def add_text(role, content, history):
+    print("expand history items into new_history")
+    # expand history items into new_history
+    new_history = [h for h in history]
+    new_history.append({"role":role,"content":content})
+    return new_history
+```
+
+```python 
+# To save the json that makes up the conversation.
+def save_history(table,item):
+    print("put item")
+    dynamodb_resource=boto3.resource('dynamodb')
+    table_session_active = dynamodb_resource.Table(table)
+    response = table_session_active.put_item(Item=item)
+    print(response)
+    return True
+```
+
+```python 
+# To download the content of the active conversation
+def load_history(table, sessionid):
+    response = table.get_item(Key={"id": sessionid})
+    return response.get("Item")
+```
+
+- Image: 
+
+AWS Lambda Function [agent_image_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_image_v3/lambda_function.py)
+
+The python function that invokes the LLm is the following:
+
+```python
+def agent_image(model_id, anthropic_version, max_tokens,image_path,text,history):
+    with open(image_path, "rb") as image_file:
+        content_image = base64.b64encode(image_file.read()).decode('utf8')
+    content = [
+        {"type": "image", "source": {"type": "base64",
+            "media_type": "image/jpeg", "data": content_image}},
+        {"type":"text","text":text}
+        ]
+    new_history = add_text("user",content, history)
+    body = {
+        "system": "You are an AI Assistant, always reply in the original user text language.",
+        "messages":new_history,"anthropic_version": anthropic_version,"max_tokens":max_tokens}
+    
+    response = bedrock_client.invoke_model(body=json.dumps(body), modelId=model_id, accept=accept, contentType=contentType)
+    response_body = json.loads(response.get('body').read())
+    assistant_text = response_body.get("content")[0].get("text")
+    new_history = add_text("assistant", assistant_text, new_history)
+    
+    return assistant_text, new_history
+```
+
+> ✅ Note: Like the previous lambda function, it also has session time and conversation memory
+
 ## Enjoy the app!:
 
 ✅  Chat and ask follow-up questions. Test your multi-language skills.
@@ -241,6 +342,7 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 ✅ Send and transcribe voice notes. Test the app's capabilities for transcribing multiple languages.
 
 ![Digrama parte 1](/imagenes/voice-note.gif)
+
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
 
