@@ -343,6 +343,9 @@ def agent_image(model_id, anthropic_version, max_tokens,image_path,text,history)
 
 ![Digrama parte 1](/imagenes/voice-note.gif)
 
+✅ Send photos and test the app's capabilities to describe and identify what's in the images. Play with prompts
+
+![Digrama parte 1](/imagenes/image_claude.gif)
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
 
