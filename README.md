@@ -7,6 +7,9 @@ Your data will be securely stored in your AWS account and will not be shared or 
 
 ![Digrama parte 1](/imagenes/gif_01.gif)
 
+### UPDATE: Power multichannel with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1)
+![Digrama parte 1](/imagenes/image_claude.gif)
+
 ✅ **AWS Level**: Intermediate - 200   
 
 **Prerequisites:**
@@ -333,6 +336,19 @@ def agent_image(model_id, anthropic_version, max_tokens,image_path,text,history)
 
 > ✅ Note: Like the previous lambda function, it also has session time and conversation memory
 
+* To use the Lambda Function [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) you must change the `LAMBDA_AGENT_TEXT` environment variable in Lambda Function [process_stream](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/tree/main/private-assistant/lambdas/code/process_stream): 
+
+In [private_assistant_stack](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/private_assistant/private_assistant_stack.py): 
+
+```python
+#Line 77
+Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.agent_image_v3.function_name)
+```
+
+or in AWS Lambda Console: 
+
+![Digrama parte 1](/imagenes/image_claude.jpg)
+
 ## Enjoy the app!:
 
 ✅  Chat and ask follow-up questions. Test your multi-language skills.
@@ -349,6 +365,17 @@ def agent_image(model_id, anthropic_version, max_tokens,image_path,text,history)
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
 
+
+## Clean the house!:
+
+If you finish testing and want to clean the application, you just have to follow these two steps:
+
+1. Delete the files from the Amazon S3 bucket created in the deployment. 
+2. Run this command in your terminal:
+
+```
+cdk deploy
+```
 
 
 ## Conclusion: 
