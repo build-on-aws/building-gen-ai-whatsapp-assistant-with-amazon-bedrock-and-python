@@ -10,7 +10,7 @@ Your data will be securely stored in your AWS account and will not be shared or 
 
 
 
-### ** UPDATE: Power multichannel with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1)
+### ** UPDATE: Power with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1)
 
 
 ✅ **AWS Level**: Intermediate - 200   
@@ -47,7 +47,7 @@ Your data will be securely stored in your AWS account and will not be shared or 
 ![Digrama parte 1](/imagenes/2_step.jpg)
 [process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to an "agent" Lambda Function . 
 
-In this application there are 2 "agent" Lambda Functions that can fulfill this function, one that uses LangChain to handle the conversations and Amazon Bedrock to invoke the LLM named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py), another that uses the Amazon Bedrock API call directly named [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) with [Claude 3 Sonnet](https://www.anthropic.com/news/claude-3-family) , which one to use is up to you.
+In this application are 2 Lambda Functions that can fulfill this function, one that uses LangChain to handle the conversations and Amazon Bedrock to invoke the LLM, named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py), another that uses the Amazon Bedrock API call directly named [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) with [Claude 3 Sonnet](https://www.anthropic.com/news/claude-3-family) , which one to use is up to you.
 
 #### Voice Message:
 
