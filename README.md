@@ -45,7 +45,7 @@ Your data will be securely stored in your AWS account and will not be shared or 
 #### Text Message:
 
 ![Digrama parte 1](/imagenes/2_step.jpg)
-[process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to an "agent" Lambda Function . 
+[process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to a Lambda Function . 
 
 In this application are 2 Lambda Functions that can fulfill this function, one that uses LangChain to handle the conversations and Amazon Bedrock to invoke the LLM, named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py), another that uses the Amazon Bedrock API call directly named [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) with [Claude 3 Sonnet](https://www.anthropic.com/news/claude-3-family) , which one to use is up to you.
 
@@ -118,7 +118,7 @@ except ClientError as e:
 ![Digrama parte 1](/imagenes/3_step.jpg)
 
 The agent receives the text and performs the following:
-1. Queries the Amazon DynamoDB table called `user_metadata` to see if the `session` has expired. If it is active, it recovers the `SessionID`, necessary for the next step, if it expires it creates a new session timer. In Lambda Function named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py)the chat history is managed with the Lanchain memory class, in the Lambda Function named [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) it is solved with a Json array that is fed with the history of the conversation.
+1. Queries the Amazon DynamoDB table called `user_metadata` to see if the `session` has expired. If it is active, it recovers the `SessionID`, necessary for the next step, if it expires it creates a new session timer. In Lambda Function named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py)the chat history is managed with the Lanchain memory class, in the Lambdas Functions [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) and [agent_image_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_image_v3/lambda_function.py) it is solved with a Json array that is fed with the history of the conversation.
 2. Queries the Amazon DynamoDB table called session Table to see if there is any previous conversation history.
 3. Consult the LLM through Amazon Bedrock using the following prompt:
 
