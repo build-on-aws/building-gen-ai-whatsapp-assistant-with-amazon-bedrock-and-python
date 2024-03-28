@@ -42,7 +42,6 @@ class PrivateAssistantStack(Stack):
             'WHATS_TOKEN': SecretValue.unsafe_plain_text('FROM_WHATSAPP'),
             'WHATS_VERIFICATION_TOKEN': SecretValue.unsafe_plain_text('CREATE_ONE'),
             'WHATS_PHONE_ID':SecretValue.unsafe_plain_text('FROM_WHATSAPP'),
-            'WHATS_TOKEN': SecretValue.unsafe_plain_text('FROM_WHATSAPP')
            }) 
         
         Tbl = Tables(self, 'Tbl')
