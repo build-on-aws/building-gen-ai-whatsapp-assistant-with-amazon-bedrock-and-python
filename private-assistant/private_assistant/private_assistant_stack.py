@@ -160,7 +160,7 @@ class PrivateAssistantStack(Stack):
         Tbl.user_sesion_metadata.grant_full_access(Fn.agent_image_v3)
         Fn.agent_image_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
 
-        Fn.agent_image_v3.add_environment(key='ENV_MODEL_ID_V3', value=model_id_v3)
+        Fn.agent_image_v3.add_environment(key='ENV_MODEL_ID_IMAGE', value=model_id_v3)
         Fn.agent_image_v3.add_environment(key='ENV_ANTHROPIC_VERSION', value=anthropic_version)
 
         Fn.agent_image_v3.add_environment(key='BucketName', value=s3_deploy.bucket.bucket_name)
