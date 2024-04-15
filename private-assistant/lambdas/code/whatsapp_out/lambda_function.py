@@ -15,7 +15,7 @@ def whats_out(phone, whats_token, phone_id, message, in_reply_to):
     headers = {'Authorization': whats_token, 'Content-Type': 'application/json'}
     data = { 
         "messaging_product": "whatsapp", 
-        "to": normalize_phone(phone), 
+        "to": replace_start(normalize_phone(phone)), 
         "context":  json.dumps({ "message_id": in_reply_to}),
         "type": "text", 
         "text": json.dumps({ "preview_url": False, "body": message})
@@ -45,3 +45,12 @@ def lambda_handler(event, context):
     except Exception as error: 
         print('FAILED!', error)
         return True
+    
+## FIX FOR ARGENTINIAN PHONES
+
+def replace_start(s):
+    number = s[4:]
+    if s.startswith("+549"):
+        return "+54" + number
+    else:
+        return s

@@ -129,8 +129,9 @@ class PrivateAssistantStack(Stack):
         Fn.transcriber_done.add_environment(key='whatsapp_MetaData', value=Tbl.whatsapp_MetaData.table_name)
 
         Fn.langchain_agent_text.grant_invoke(Fn.transcriber_done)
+        Fn.agent_text_v3.grant_invoke(Fn.transcriber_done)
 
-        Fn.transcriber_done.add_environment( key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name)
+        Fn.transcriber_done.add_environment( key='ENV_LAMBDA_AGENT_TEXT', value=Fn.agent_text_v3.function_name)
 
         # langchain_agent_text
 
@@ -185,7 +186,8 @@ class PrivateAssistantStack(Stack):
         Tbl.user_sesion_metadata.grant_full_access(Fn.agent_text_v3)
         Fn.agent_text_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
         
-        Fn.agent_text_v3.add_environment(key='ENV_MODEL_ID', value=model_id)
+        Fn.agent_text_v3.add_environment(key='ENV_MODEL_ID_V3', value=model_id_v3)
+        Fn.agent_text_v3.add_environment(key='ENV_ANTHROPIC_VERSION', value=anthropic_version)
 
         Fn.agent_text_v3.add_environment( key='WHATSAPP_OUT', value=Fn.whatsapp_out.function_name )
         

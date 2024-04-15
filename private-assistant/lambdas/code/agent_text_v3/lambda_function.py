@@ -13,6 +13,7 @@ import requests
 from db_utils import (update_items_out,save_item_ddb,query,update_item_session)
 
 from utils import whats_reply
+from boto3.dynamodb.conditions import Key
 
 BucketName = os.environ.get('BucketName')
 ImageKeyName = os.environ.get('ImageKeyName')

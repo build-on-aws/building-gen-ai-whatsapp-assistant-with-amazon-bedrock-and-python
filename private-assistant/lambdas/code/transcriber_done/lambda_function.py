@@ -65,45 +65,29 @@ def lambda_handler(event, context):
             whats_token = whatsapp_data['whats_token']
             phone_id = whatsapp_data['changes'][0]["value"]["metadata"]["phone_number_id"]
 
-            try:
-                print('REQUEST RECEIVED:', event)
-                print('REQUEST CONTEXT:', context)
-                print("PROMPT: ",text)
+            try:       
+                response_3 = lambda_client.invoke(
+                    FunctionName = LAMBDA_AGENT_TEXT,
+                    InvocationType = 'Event' ,#'RequestResponse', 
+                    Payload = json.dumps({
+                        'whats_message': text,
+                        'whats_token': whats_token,
+                        'phone': phone,
+                        'phone_id': phone_id,
+                        'messages_id': messages_id
 
-                whats_reply(whatsapp_out_lambda,phone, whats_token, phone_id, f"{text}", keyvalue)
+                    })
+                )
 
-                #remove this comment if you want to send voice notes to the agent!
+                print(f'\nRespuesta:{response_3}')
 
-                """ 
-                try:       
-
-                    response_3 = lambda_client.invoke(
-                        FunctionName = LAMBDA_AGENT_TEXT,
-                        InvocationType = 'Event' ,#'RequestResponse', 
-                        Payload = json.dumps({
-                            'whats_message': text,
-                            'whats_token': whats_token,
-                            'phone': phone,
-                            'phone_id': phone_id,
-                            'messages_id': messages_id
-
-                        })
-                    )
-
-                    print(f'\nRespuesta:{response_3}')
-
-                    return response_3
-                    
-                except ClientError as e:
-                    err = e.response
-                    error = err
-                    print(err.get("Error", {}).get("Code"))
-                    return f"Un error invocando {LAMBDA_AGENT_TEXT}
-                """
-            
-            except Exception as error: 
-                print('FAILED!', error)
-                return True
+                # return response_3
+                
+            except ClientError as e:
+                err = e.response
+                error = err
+                print(err.get("Error", {}).get("Code"))
+                return f"Un error invocando {LAMBDA_AGENT_TEXT}"
             
         else:
             print("No text file")
