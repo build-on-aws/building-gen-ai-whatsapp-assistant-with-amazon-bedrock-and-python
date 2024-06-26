@@ -16,7 +16,7 @@ from boto3.dynamodb.conditions import Key
 
 BucketName = os.environ.get('BucketName')
 ImageKeyName = os.environ.get('ImageKeyName')
-model_id = os.environ.get('ENV_MODEL_ID_IMAGE')
+model_id = os.environ.get('ENV_MODEL_ID')
 accept = 'application/json'
 contentType = 'application/json'
 anthropic_version = os.environ.get('ENV_ANTHROPIC_VERSION')
