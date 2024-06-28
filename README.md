@@ -4,8 +4,14 @@ With this WhatsApp app, you can chat in any language with a [Large language mode
 
 Your data will be securely stored in your AWS account and will not be shared or used for model training. It is not recommended to share private information because the security of data with WhatsApp is not guaranteed.
 
+![Digrama parte 1](/imagenes/gif_001.gif)     
+![Digrama parte 1](/imagenes/image_claude_v2.gif)**          
 
-![Digrama parte 1](/imagenes/gif_01.gif)
+
+
+
+### ** UPDATE: Power with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1)
+
 
 ✅ **AWS Level**: Intermediate - 200   
 
@@ -29,7 +35,7 @@ Your data will be securely stored in your AWS account and will not be shared or 
 
 ![Digrama parte 1](/imagenes/1_step.jpg)
 
-1. WhatsApp receives the message: voice/text.
+1. WhatsApp receives the message: voice/text/image.
 2. [Amazon API Gateway](https://aws.amazon.com/api-gateway/) receives the message from the [WhatsApp webhook](https://business.whatsapp.com/blog/how-to-use-webhooks-from-whatsapp-business-api) (previously authenticated).
 3. Then, an [AWS Lambda Functions](https://aws.amazon.com/es/pm/lambda) named [whatsapp_in](/private-assistant/lambdas/code/whatsapp_in/lambda_function.py) processes the message and sends it to an [Amazon DynamoDB](https://aws.amazon.com/pm/dynamodb/) table named whatsapp-metadata to store it.
 4. The DynamoDB table whtsapp-metadata has a [DynamoDB streaming](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) configured, which triggers the [process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function.
@@ -39,7 +45,9 @@ Your data will be securely stored in your AWS account and will not be shared or 
 #### Text Message:
 
 ![Digrama parte 1](/imagenes/2_step.jpg)
-[process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to the lambda function named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) (in the next step we will explore it).
+[process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to a Lambda Function . 
+
+In this application are 2 Lambda Functions that can fulfill this function, one that uses LangChain to handle the conversations and Amazon Bedrock to invoke the LLM, named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py), another that uses the Amazon Bedrock API call directly named [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) with [Claude 3 Sonnet](https://www.anthropic.com/news/claude-3-family) , which one to use is up to you.
 
 #### Voice Message:
 
@@ -97,12 +105,20 @@ except ClientError as e:
     return f"Un error invocando {LAMBDA_AGENT_TEXT}
 ```
 
+#### Image Message:
+
+![Digrama parte 1](/imagenes/image_step.jpg)
+
+[process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function sends the text of the message to a Lambda Function named [agent_image_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_image_v3/lambda_function.py). 
+
+
+
 ### 3- LLM Processing:
 
 ![Digrama parte 1](/imagenes/3_step.jpg)
 
 The agent receives the text and performs the following:
-1. Queries the Amazon DynamoDB table called `user_metadata` to see if the `session` has expired. If it is active, it recovers the `SessionID`, necessary for the next step, if it expires it creates a new session timer.
+1. Queries the Amazon DynamoDB table called `user_metadata` to see if the `session` has expired. If it is active, it recovers the `SessionID`, necessary for the next step, if it expires it creates a new session timer. In Lambda Function named [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py)the chat history is managed with the Lanchain memory class, in the Lambdas Functions [agent_text_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_text_v3/lambda_function.py) and [agent_image_v3](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/agent_image_v3/lambda_function.py) it is solved with a Json array that is fed with the history of the conversation.
 2. Queries the Amazon DynamoDB table called session Table to see if there is any previous conversation history.
 3. Consult the LLM through Amazon Bedrock using the following prompt:
 
@@ -111,13 +127,6 @@ The following is a friendly conversation between a human and an AI.
     The AI is talkative and provides lots of specific details from its context. 
     If the AI does not know the answer to a question, it truthfully says it does not know.
     Always reply in the original user language.
-
-    Current conversation:
-    {history}
-
-    Human:{input}
-
-    Assistant:
 ```
 4. Send the response to WhatsApp through `whatsapp_out` the Lambda Function.
 
@@ -167,7 +176,12 @@ if diferencia > 240:  #session time in seg
 
 > **Tip:** [Kenton Blacutt](https://github.com/KBB99), an AWS Associate Cloud App Developer, collaborated with Langchain, creating the [Amazon Dynamodb based memory class](https://github.com/langchain-ai/langchain/pull/1058) that allows us to store the history of a langchain agent in an [Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html?sc_channel=el&sc_campaign=genaiwave&sc_content=working-with-your-live-data-using-langchain&sc_geo=mult&sc_country=mult&sc_outcome=acq).
 
+**To use the Lambda Function** [langchain_agent_text](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py): change the `LAMBDA_AGENT_TEXT` environment variable in Lambda Function [process_stream](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/tree/main/private-assistant/lambdas/code/process_stream) in [private_assistant_stack](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/private_assistant/private_assistant_stack.py): 
 
+```python
+#Line 77
+Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name)
+```
 
 - Configure the [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
 
@@ -234,18 +248,35 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 ![Digrama parte 1](/imagenes/webhook.png)
 
 ----
+
+
 ## Enjoy the app!:
 
 ✅  Chat and ask follow-up questions. Test your multi-language skills.
 
-![Digrama parte 1](/imagenes/memory.gif)
+![Digrama parte 1](/imagenes/memory_2.gif)
 
 ✅ Send and transcribe voice notes. Test the app's capabilities for transcribing multiple languages.
 
-![Digrama parte 1](/imagenes/voice-note.gif)
+![Digrama parte 1](/imagenes/voice-note-2.gif)
+
+✅ Send photos and test the app's capabilities to describe and identify what's in the images. Play with prompts
+
+![Digrama parte 1](/imagenes/image_claude_v2.gif)
 
 ## 🚀 Keep testing the app, play with the prompt [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Amazon Lambda function and adjust it to your need. 
 
+
+## Clean the house!:
+
+If you finish testing and want to clean the application, you just have to follow these two steps:
+
+1. Delete the files from the Amazon S3 bucket created in the deployment. 
+2. Run this command in your terminal:
+
+```
+cdk destroy
+```
 
 
 ## Conclusion: 

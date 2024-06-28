@@ -77,7 +77,7 @@ class Lambdas(Construct):
             description ="queries anthropic.claude-3-sonnet - Image" ,
             handler="lambda_function.lambda_handler",
             code=aws_lambda.Code.from_asset("./lambdas/code/agent_image_v3"),
-            layers= [Lay.bedrock,Lay.common],
+            layers= [Lay.bedrock,Lay.common,Lay.bs4_requests],
             architecture=aws_lambda.Architecture.ARM_64,
             **COMMON_LAMBDA_CONF)
         
@@ -86,7 +86,7 @@ class Lambdas(Construct):
             description ="queries anthropic.claude-3-sonnet - Text " ,
             handler="lambda_function.lambda_handler",
             code=aws_lambda.Code.from_asset("./lambdas/code/agent_text_v3"),
-            layers= [Lay.bedrock,Lay.common],
+            layers= [Lay.bedrock,Lay.bs4_requests,Lay.common],
             architecture=aws_lambda.Architecture.ARM_64,
             **COMMON_LAMBDA_CONF)
         

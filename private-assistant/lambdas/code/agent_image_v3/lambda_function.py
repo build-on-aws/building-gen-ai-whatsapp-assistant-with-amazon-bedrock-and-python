@@ -8,6 +8,7 @@ import os
 import time
 import base64
 import sys
+import requests
 from file_utils import(get_media_url , get_whats_media, put_file)
 from db_utils import (update_items_out,save_item_ddb,query,update_item_session)
 from utils import whats_reply
@@ -15,7 +16,7 @@ from boto3.dynamodb.conditions import Key
 
 BucketName = os.environ.get('BucketName')
 ImageKeyName = os.environ.get('ImageKeyName')
-model_id = os.environ.get('ENV_MODEL_ID_IMAGE')
+model_id = os.environ.get('ENV_MODEL_ID')
 accept = 'application/json'
 contentType = 'application/json'
 anthropic_version = os.environ.get('ENV_ANTHROPIC_VERSION')

@@ -74,7 +74,7 @@ class PrivateAssistantStack(Stack):
         #Fn.whatsapp_in.add_environment(key='whatsapp_MetaData_follow', value=Tbl.whatsapp_MetaData_follow.table_name)
         #Tbl.whatsapp_MetaData_follow.grant_full_access(Fn.whatsapp_in)
         
-        Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name)
+        Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.agent_text_v3.function_name)
         Fn.process_stream.add_environment(key='JOB_TRANSCRIPTOR_LAMBDA', value=Fn.audio_job_transcriptor.function_name)
         Fn.process_stream.add_environment(key='whatsapp_MetaData', value=Tbl.whatsapp_MetaData.table_name)
         Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_IMAGE', value=Fn.agent_image_v3.function_name)
@@ -161,7 +161,7 @@ class PrivateAssistantStack(Stack):
         Tbl.user_sesion_metadata.grant_full_access(Fn.agent_image_v3)
         Fn.agent_image_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
 
-        Fn.agent_image_v3.add_environment(key='ENV_MODEL_ID_V3', value=model_id_v3)
+        Fn.agent_image_v3.add_environment(key='ENV_MODEL_ID', value=model_id_v3)
         Fn.agent_image_v3.add_environment(key='ENV_ANTHROPIC_VERSION', value=anthropic_version)
 
         Fn.agent_image_v3.add_environment(key='BucketName', value=s3_deploy.bucket.bucket_name)
