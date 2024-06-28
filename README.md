@@ -154,8 +154,10 @@ cd private-assistant
 In [private_assistant_stack.py](/private-assistant/private_assistant/private_assistant_stack.py) edit this line with the whatsapp Facebook Developer app number: 
 
 `
-DISPLAY_PHONE_NUMBER = 'YOU-NUMBER'
+DISPLAY_PHONE_NUMBER = 'YOUR-WHATSAPP-NUMBER'
 `
+
+![Digrama parte 1](./imagenes/whaytsapp_number.jpg)
 
 This agent manages conversation memory, and you must set the session time [here](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) in this line:
 
