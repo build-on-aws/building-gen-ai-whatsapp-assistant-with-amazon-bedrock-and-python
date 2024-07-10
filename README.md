@@ -252,7 +252,7 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 
 ## Enjoy the app!:
 
-✅  Chat and ask follow-up questions. Test your multi-language skills.
+✅  Chat and ask follow-up questions. Test the multi-language skills.
 
 ![Digrama parte 1](/imagenes/memory_2.gif)
 
