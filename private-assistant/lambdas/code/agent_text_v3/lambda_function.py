@@ -13,6 +13,7 @@ import requests
 from db_utils import (update_items_out,save_item_ddb,query,update_item_session)
 
 from utils import whats_reply
+from boto3.dynamodb.conditions import Key
 
 BucketName = os.environ.get('BucketName')
 ImageKeyName = os.environ.get('ImageKeyName')
@@ -23,6 +24,7 @@ anthropic_version = os.environ.get('ENV_ANTHROPIC_VERSION')
 
 whatsapp_out_lambda = os.environ.get('WHATSAPP_OUT')
 table_name_active_connections = os.environ.get('whatsapp_MetaData')
+
 
 client_s3 = boto3.client('s3')
 dynamodb_resource=boto3.resource('dynamodb')
