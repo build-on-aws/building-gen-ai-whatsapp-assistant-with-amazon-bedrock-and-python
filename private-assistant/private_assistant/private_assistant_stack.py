@@ -185,7 +185,7 @@ class PrivateAssistantStack(Stack):
         Tbl.user_sesion_metadata.grant_full_access(Fn.agent_text_v3)
         Fn.agent_text_v3.add_environment(key='user_sesion_metadata', value=Tbl.user_sesion_metadata.table_name)
         
-        Fn.agent_text_v3.add_environment(key='ENV_MODEL_ID', value=model_id)
+        Fn.agent_text_v3.add_environment(key='ENV_MODEL_ID_V3', value=model_id_v3)
 
         Fn.agent_text_v3.add_environment( key='WHATSAPP_OUT', value=Fn.whatsapp_out.function_name )
         
