@@ -99,7 +99,12 @@ def agent_image(model_id, anthropic_version, max_tokens,image_path,text,history)
             "media_type": "image/jpeg", "data": content_image}},
         {"type":"text","text":text}
         ]
-    new_history = add_text("user",content, history)
+    if len(history)>0:
+        new_history = add_text("user",content, history)
+        print("old:", new_history)
+    else:
+        new_history = [{"role":"user","content":content}]
+        print("new:",new_history)
     body = {
         "system": "You are an AI Assistant, always reply in the original user text language.",
         "messages":new_history,"anthropic_version": anthropic_version,"max_tokens":max_tokens}

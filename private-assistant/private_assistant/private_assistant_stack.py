@@ -30,7 +30,7 @@ class PrivateAssistantStack(Stack):
         TextBucketName = "text-to-whatsapp"
         ImageKeyName = "image-from-whatsapp"
         model_id = "anthropic.claude-instant-v1"
-        model_id_v3 = "anthropic.claude-3-sonnet-20240229-v1:0"
+        model_id_v3 = "anthropic.claude-3-5-sonnet-20240620-v1:0"
         anthropic_version = "bedrock-2023-05-31"
         
         DISPLAY_PHONE_NUMBER = 'YOU-NUMBER'
@@ -191,6 +191,7 @@ class PrivateAssistantStack(Stack):
         
         Fn.agent_text_v3.grant_invoke(Fn.process_stream)
         Fn.agent_text_v3.add_to_role_policy(iam.PolicyStatement( actions=["bedrock:*"], resources=['*']))
+        Fn.agent_text_v3.add_environment(key='ENV_ANTHROPIC_VERSION', value=anthropic_version)
 
         
 

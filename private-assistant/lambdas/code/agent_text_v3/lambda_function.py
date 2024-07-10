@@ -70,16 +70,27 @@ def agent_text(model_id, anthropic_version, text, max_tokens,history):
     Always reply in the original user language.
     """
     boto3_bedrock = boto3.client("bedrock-runtime")
+    
+    
     content = [{"type":"text","text":text}]
-    new_history = add_text("user",content, history)
+    
+    if len(history)>0:
+        new_history = add_text("user",content, history)
+        print("old:", new_history)
+    else:
+        new_history = [{"role":"user","content":content}]
+        print("new:",new_history)
     #text  = '\n'.join([f"<document>{doc.page_content}</document>" for doc in docs])
     body = {
         "system": system_prompt,
-        "messages":new_history,"anthropic_version":anthropic_version,
-        "max_tokens":max_tokens}
+        "messages":new_history,
+        "anthropic_version":anthropic_version,
+        "max_tokens":max_tokens
+    
+    }
     accept = 'application/json'
     contentType = 'application/json'
-
+    print()
     response = boto3_bedrock.invoke_model(
         body=json.dumps(body), 
         modelId=model_id, accept=accept, contentType=contentType)
