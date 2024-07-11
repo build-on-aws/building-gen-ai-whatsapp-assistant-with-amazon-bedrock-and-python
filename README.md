@@ -10,7 +10,7 @@ Your data will be securely stored in your AWS account and will not be shared or 
 
 
 
-### ** UPDATE: Power with [Anthropic's Claude 3](https://aws.amazon.com/bedrock/claude/?th=tile&tile=anthropic&p=1)
+### ** UPDATE: Power with [Anthropic's Claude 3.5](https://aws.amazon.com/bedrock/claude/)
 
 
 ✅ **AWS Level**: Advanced - 300   
