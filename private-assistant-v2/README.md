@@ -6,10 +6,15 @@ You'll learn how to combine Amazon Bedrock with [AWS End User Messaging](https:/
 
 >Your data will be securely stored in your AWS account and will not be shared or used for model training. It is not recommended to share private information because the security of data with WhatsApp is not guaranteed.
 
-| Voice notes | Image | Video | 
-|----------|------------|--------------|
-|![Process Voice notes](./imagen/voice_note.gif)| ![Process image](./imagen/image.gif) |![Process Video](./imagen/video.gif)|
+| Voice notes | Image | 
+|----------|------------|
+|![Process Voice notes](./imagen/voice_note.gif)| ![Process image](./imagen/image.gif)  |
 
+>[Thanks User Group Montevideo for the photo](https://www.linkedin.com/posts/aws-ug-montevideo_meetups-aws-montevideo-activity-7297271247103549441-koU8?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB5M4B8BnGWK9J1kpcrduy0KlkH3bvggG-E)  
+
+| Video | Document |
+|--------------|--------------|
+|![Process Video](./imagen/video.gif)|![Process Documents](./imagen/documents.gif)|
 
 ✅ **AWS Level**: Advanced - 300   
 
