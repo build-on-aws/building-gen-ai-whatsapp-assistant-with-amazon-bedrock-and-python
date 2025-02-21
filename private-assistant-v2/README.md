@@ -19,7 +19,7 @@ You'll learn how to combine Amazon Bedrock with [AWS End User Messaging](https:/
 -  [Foundational knowledge of Python](https://catalog.us-east-1.prod.workshops.aws/workshops/3d705026-9edc-40e8-b353-bdabb116c89c/) 
 - [AWS CLI configured](https://docs.aws.amazon.com/cli/v1/userguide/cli-chap-configure.html) with appropriate permissions.
 - [Python 3.8](https://www.python.org/downloads/) or later.
-- [AWS CDK CLI](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) v2.172.0 or later.
+- [AWS AWS Cloud Development Kit (CDK)](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html) v2.172.0 or later.
 - [Have or create a Meta Business Account](https://docs.aws.amazon.com/social-messaging/latest/userguide/getting-started-whatsapp.html#getting-started-embedded)
 
 ## 🤔 How The App Works
