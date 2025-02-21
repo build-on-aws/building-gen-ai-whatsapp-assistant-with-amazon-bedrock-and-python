@@ -16,7 +16,7 @@ You'll learn how to combine Amazon Bedrock with [AWS End User Messaging](https:/
 |--------------|--------------|
 |![Process Video](./imagen/video.gif)|![Process Documents](./imagen/documents.gif)|
 
-✅ **AWS Level**: Advanced - 300   
+✅ **AWS Level**: Advanced - 300
 
 **Prerequisites:**
 
