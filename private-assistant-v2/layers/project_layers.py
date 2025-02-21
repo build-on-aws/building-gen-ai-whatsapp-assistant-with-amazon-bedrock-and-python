@@ -33,7 +33,7 @@ class Layers(Construct):
 
         # Boto3 layer for end user messaging
         self.boto3layer = aws_lambda.LayerVersion(
-            self, "Boto3.1.35.69", code=aws_lambda.Code.from_asset("./layers/boto3.1.35.69.zip"),
+            self, "Boto3.1.36.21", code=aws_lambda.Code.from_asset("./layers/boto3.1.36.21.zip"),
             compatible_runtimes = self._default_runtimes, 
             description = 'Boto3 con Social Messaging', layer_version_name = "boto3-layer"
         )

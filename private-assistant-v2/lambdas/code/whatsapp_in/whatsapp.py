@@ -8,6 +8,8 @@ import boto3.dynamodb.table
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
 VOICE_PREFIX = os.environ.get("VOICE_PREFIX")
 IMAGE_PREFIX = os.environ.get("IMAGE_PREFIX")
+VIDEO_PREFIX = os.environ.get("VIDEO_PREFIX")
+DOC_PREFIX = os.environ.get("DOC_PREFIX")
 
 class WhatsappMessage:
     def __init__(
@@ -59,7 +61,9 @@ class WhatsappMessage:
         # Map message types to their prefixes
         MEDIA_TYPE_PREFIXES = {
             "audio": VOICE_PREFIX,
-            "image": IMAGE_PREFIX
+            "image": IMAGE_PREFIX,
+            "video": VIDEO_PREFIX,
+            "document": DOC_PREFIX
         }
         
         media_prefix = MEDIA_TYPE_PREFIXES.get(message_type)

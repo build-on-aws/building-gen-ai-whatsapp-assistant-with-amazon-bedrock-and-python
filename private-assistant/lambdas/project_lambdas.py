@@ -68,7 +68,7 @@ class Lambdas(Construct):
             description ="Agent with LangChain and Amazon Bedrock" ,
             handler="lambda_function.lambda_handler",
             code=aws_lambda.Code.from_asset("./lambdas/code/langchain_agent_text"),
-            layers= [Lay.bedrock,Lay.bs4_requests,Lay.common,Lay.langchain],
+            layers= [Lay.bedrock,Lay.bs4_requests,Lay.langchain],
             architecture=aws_lambda.Architecture.ARM_64,
             **COMMON_LAMBDA_CONF)
         

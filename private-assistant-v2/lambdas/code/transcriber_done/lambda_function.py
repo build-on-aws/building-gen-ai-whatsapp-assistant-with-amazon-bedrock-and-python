@@ -53,7 +53,7 @@ def lambda_handler(event, context):
             print("message_json: ",message_json)
             print("whatsapp_data: ",whatsapp_data)
             message['text']['body'] = message_json["results"]['transcripts'][0]['transcript']
-            phone_number_id = str(whatsapp_data['phone_number_id'])
+            phone_number_id = str(whatsapp_data['eum_phone_number'])
             message["from"] = str(whatsapp_data['from'])
             message['id'] = str(whatsapp_data['id'])
             message['type'] = "text"

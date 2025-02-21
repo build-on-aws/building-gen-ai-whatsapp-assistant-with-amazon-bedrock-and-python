@@ -72,6 +72,22 @@ class Layers(Construct):
 
         
         self.langchain = langchain
+        
+        # Improved agent utilities layer with better error handling and features
+        improved_agent_utils = aws_lambda.LayerVersion(
+            self, "improved-agent-utils", 
+            code=aws_lambda.Code.from_asset("./layers/common/"),
+            compatible_runtimes = [
+                aws_lambda.Runtime.PYTHON_3_8,
+                aws_lambda.Runtime.PYTHON_3_9,
+                aws_lambda.Runtime.PYTHON_3_10,
+                aws_lambda.Runtime.PYTHON_3_11
+            ],
+            description = 'Improved agent utilities with better error handling',
+            layer_version_name = "improved-agent-utils"
+        )
+        
+        self.improved_agent_utils = improved_agent_utils
 
 
 

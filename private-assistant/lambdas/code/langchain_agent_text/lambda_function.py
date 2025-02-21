@@ -1,3 +1,23 @@
+# Original implementation (commented out for reference)
+# Original limitations:
+# 1. Mixed concerns (configuration, session, conversation handling)
+# 2. Limited error handling and logging
+# 3. No type hints or input validation
+# 4. Basic prompt templates
+# 5. Hardcoded configuration
+# 6. No separation of concerns
+#
+# See improved version in langchain_agent_text/improved/lambda_function.py 
+# for better implementation with:
+# 1. Proper code organization
+# 2. Enhanced error handling
+# 3. Better logging
+# 4. Type safety
+# 5. Configuration management
+# 6. Improved prompt handling
+#
+# Original code preserved for reference:
+"""
 #################################################
 ## This function is to query a dynamoDB table ###
 #################################################
@@ -6,7 +26,12 @@ import json
 import boto3
 import os
 import requests
-import time
+import time"""
+
+# Import improved implementations
+from improved.conversation import ConversationManager
+from improved.session_manager import SessionManager
+from improved.utils import normalize_phone, whats_reply, update_items_out
 
 from db_utils import query,save_item_ddb,update_items_out,update_item_session
 
@@ -67,6 +92,10 @@ def get_chat_response(llm,prompt, memory):
     return conversation_with_summary.predict(input=prompt)
 
 
+# Original lambda_handler implementation commented out
+# See improved version in lambda_function.py for better implementation
+
+"""
 def lambda_handler(event, context):
     print (event)
 
@@ -78,6 +107,87 @@ def lambda_handler(event, context):
     phone = event['phone']
     phone_id = event['phone_id']
     phone_number = phone.replace("+","")
+"""
+
+# Improved implementation using new components and better error handling
+def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
+    """Enhanced Lambda handler with better organization and error handling.
+    
+    Args:
+        event: API Gateway event
+        context: Lambda context
+        
+    Returns:
+        dict: Response with conversation result or error
+        
+    Raises:
+        Exception: For critical failures after retries
+    """
+    logger.info(f"Received event: {event}")
+    
+    try:
+        # Parse and validate request
+        chat_request = ChatRequestData.from_event(event)
+        
+        # Initialize configuration
+        config = ChatServiceConfig()
+        
+        # Initialize session management
+        session_manager = SessionManager(
+            table_session_active=config.table_session_active,
+            session_timeout=config.session_timeout
+        )
+        
+        # Get or create session
+        session_info = session_manager.get_or_create_session(chat_request.normalized_phone)
+        
+        # Initialize conversation
+        conversation_manager = ConversationManager(
+            config=config,
+            session_info=session_info
+        )
+        
+        # Process message
+        logger.info(f"Processing message: {chat_request.whats_message}")
+        response = conversation_manager.get_response(chat_request.whats_message)
+        
+        # Send WhatsApp reply
+        whats_reply(
+            config.whatsapp_out_lambda,
+            chat_request.phone,
+            chat_request.whats_token,
+            chat_request.phone_id,
+            str(response),
+            chat_request.messages_id
+        )
+        
+        # Update conversation record
+        end_time = int(time.time())
+        update_items_out(
+            config.table,
+            chat_request.messages_id,
+            response,
+            end_time
+        )
+        
+        logger.info("Successfully processed message")
+        return {
+            "statusCode": 200,
+            "body": json.dumps({
+                "message": response,
+                "session_id": session_info.session_id
+            })
+        }
+            
+    except Exception as error:
+        logger.error(f"Error processing message: {str(error)}", exc_info=True)
+        return {
+            "statusCode": 500,
+            "body": json.dumps({
+                "error": "An error occurred processing your message",
+                "details": str(error)
+            })
+        }
 
     #The session ID is created to store the history of the messages. 
 
