@@ -29,7 +29,7 @@ You'll learn how to combine Amazon Bedrock with [AWS End User Messaging](https:/
 
 ### Infrastructure
 
-The project uses AWS CDK to define and deploy the following resources:
+The project uses [AWS AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) to define and deploy the following resources:
 
 - [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html):
   - `whatsapp_in`: Processes incoming WhatsApp messages.
