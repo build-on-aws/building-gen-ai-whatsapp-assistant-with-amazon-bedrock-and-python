@@ -29,8 +29,8 @@ class PrivateAssistantStack(Stack):
         AudioKeyName = "audio-from-whatsapp"
         TextBucketName = "text-to-whatsapp"
         ImageKeyName = "image-from-whatsapp"
-        model_id = "anthropic.claude-instant-v1"
-        model_id_v3 = "anthropic.claude-3-5-sonnet-20240620-v1:0"
+        model_id = "anthropic.claude-3-5-haiku-20241022-v1:0"
+        model_id_v3 = "anthropic.claude-3-5-sonnet-20241022-v2:0"
         anthropic_version = "bedrock-2023-05-31"
         
         DISPLAY_PHONE_NUMBER = 'YOU-NUMBER'

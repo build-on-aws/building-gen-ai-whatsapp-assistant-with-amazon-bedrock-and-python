@@ -1,5 +1,5 @@
 #####################################################
-## This function queries anthropic.claude-3-sonnet ##
+## This function queries anthropic.claude-3-5-sonnet ##
 #####################################################
 
 import json

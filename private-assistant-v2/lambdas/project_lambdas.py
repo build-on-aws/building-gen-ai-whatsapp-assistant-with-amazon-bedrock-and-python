@@ -18,7 +18,7 @@ BASE_LAMBDA_CONFIG = dict (
     memory_size=256,
     tracing= aws_lambda.Tracing.ACTIVE)
 
-COMMON_LAMBDA_CONF = dict (runtime=aws_lambda.Runtime.PYTHON_3_11, **BASE_LAMBDA_CONFIG)
+COMMON_LAMBDA_CONF = dict (runtime=aws_lambda.Runtime.PYTHON_3_12, **BASE_LAMBDA_CONFIG)
 
 
 

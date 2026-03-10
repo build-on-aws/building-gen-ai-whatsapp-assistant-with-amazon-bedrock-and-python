@@ -18,7 +18,7 @@ BASE_LAMBDA_CONFIG = dict (
     memory_size=256,
     tracing= aws_lambda.Tracing.ACTIVE)
 
-COMMON_LAMBDA_CONF = dict (runtime=aws_lambda.Runtime.PYTHON_3_11, **BASE_LAMBDA_CONFIG)
+COMMON_LAMBDA_CONF = dict (runtime=aws_lambda.Runtime.PYTHON_3_12, **BASE_LAMBDA_CONFIG)
 
 from layers import Layers
 
@@ -74,7 +74,7 @@ class Lambdas(Construct):
         
         self.agent_image_v3 = aws_lambda.Function(
             self, "agent_image_v3", 
-            description ="queries anthropic.claude-3-sonnet - Image" ,
+            description ="queries anthropic.claude-3-5-sonnet - Image" ,
             handler="lambda_function.lambda_handler",
             code=aws_lambda.Code.from_asset("./lambdas/code/agent_image_v3"),
             layers= [Lay.bedrock,Lay.common,Lay.bs4_requests],
@@ -83,7 +83,7 @@ class Lambdas(Construct):
         
         self.agent_text_v3 = aws_lambda.Function(
             self, "agent_text_v3", 
-            description ="queries anthropic.claude-3-sonnet - Text " ,
+            description ="queries anthropic.claude-3-5-sonnet - Text" ,
             handler="lambda_function.lambda_handler",
             code=aws_lambda.Code.from_asset("./lambdas/code/agent_text_v3"),
             layers= [Lay.bedrock,Lay.bs4_requests,Lay.common],

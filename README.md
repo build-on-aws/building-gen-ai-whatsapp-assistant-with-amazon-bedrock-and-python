@@ -1,30 +1,70 @@
 # AWS Generative AI WhatsApp Assistant Samples
 
-This repository provides sample implementations using [AWS AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) Python for building WhatsApp AI assistants using AWS services and Amazon Bedrock. 
+Sample implementations using [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) and Python for building WhatsApp AI assistants powered by Amazon Bedrock.
 
+## Projects
 
-Here is a list of available samples:
-
-| Use Case | Description | Key Features | AWS Services | Languages |
-|----------|------------|--------------|--------------|-----------|
-| [AWS Generative AI WhatsApp Assistant Samples](private-assistant/README.md) | Build an AI assistant with multi-language support and voice processing |<ul><li>Multi-language conversations with Claude 3.5</li><li>Voice note transcription and processing</li><li>Text message handling with [Langchain](https://python.langchain.com/)</li><li> Implements conversation memory and session handling through Amazon DynamoDB, allowing for context retention and history tracking across interactions</li></ul> | <ul><li>[Amazon Bedrock](https://aws.amazon.com/bedrock/)</li><li>[AWS Lambda](https://aws.amazon.com/lambda/)</li><li>[Amazon DynamoDB](https://aws.amazon.com/dynamodb/)</li><li>[Amazon API Gateway](https://aws.amazon.com/api-gateway/)</li><li>[Amazon Transcribe](https://aws.amazon.com/transcribe/)</li><li>[Amazon S3](https://aws.amazon.com/s3/)</li></ul>| Multilanguage |
-| [Processing WhatsApp Multimedia with Amazon Bedrock Agents: Images, Video, and Documents](private-assistant-v2/README.md) | Create an advanced assistant for multimedia content analysis | <ul><li>A WhatsApp assistant that processes multimedia content (images, video, audio, documents) using [Amazon Nova Model](https://aws.amazon.com/ai/generative-ai/nova/) and Amazon Bedrock Agents to maintains conversation context.</li><li>Document information extraction</li><li>Audio transcription with context</li><li>Includes conversation memory management, session handling, and the ability to process different media types while maintaining context throughout interaction.</li><li>Amazon Transcribe</li></ul>| <ul><li>[Amazon Bedrock](https://aws.amazon.com/bedrock/)</li><li>[AWS Lambda](https://aws.amazon.com/lambda/)</li><li>[Amazon DynamoDB](https://aws.amazon.com/dynamodb/)</li><li>[Amazon S3](https://aws.amazon.com/s3/)</li><li>[Amazon Transcribe](https://aws.amazon.com/transcribe/)</li><li>[AWS End User Messaging](https://aws.amazon.com/end-user-messaging/)</li><li>[Amazon SNS](https://aws.amazon.com/sns/)</li></ul> | Multilanguage |
-
+| Project | Description | Stack |
+|---------|-------------|-------|
+| [private-assistant](./private-assistant/) | WhatsApp assistant with multi-language conversations, voice transcription, and image understanding via Claude 3.5 and LangChain | ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white) ![CDK](https://img.shields.io/badge/AWS_CDK-2.188.0-orange?logo=amazon-aws&logoColor=white) ![Claude](https://img.shields.io/badge/Claude_3.5-Sonnet%20%7C%20Haiku-blueviolet) |
+| [private-assistant-v2](./private-assistant-v2/) | Advanced multimodal assistant (images, video, audio, documents) using Amazon Nova Pro and Amazon Bedrock Agents, integrated via AWS End User Messaging — no extra API layer needed | ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white) ![CDK](https://img.shields.io/badge/AWS_CDK-2.188.0-orange?logo=amazon-aws&logoColor=white) ![Nova](https://img.shields.io/badge/Amazon_Nova-Pro-orange) |
 
 ---
 
-**🇻🇪🇨🇱 ¡Gracias!**
+## private-assistant
 
-**Best,**
+Classic serverless architecture using API Gateway as a WhatsApp webhook. Supports text, voice, and image messages. Conversation memory is managed via Amazon DynamoDB sessions.
 
-[Eli](https://www.linkedin.com/in/lizfue/)
+**Models:** `anthropic.claude-3-5-sonnet-20241022-v2:0` · `anthropic.claude-3-5-haiku-20241022-v1:0`
+
+**AWS Services:** Amazon Bedrock · AWS Lambda · Amazon DynamoDB · Amazon API Gateway · Amazon Transcribe · Amazon S3
+
+**Key features:**
+- Multi-language conversations (Claude replies in the user's language)
+- Voice note transcription with Amazon Transcribe (`IdentifyLanguage=True`)
+- Image analysis via Claude 3.5 Sonnet using the Bedrock `invoke_model` API
+- Session-based conversation history stored in DynamoDB
+- Two text agent options: LangChain-based (`langchain_agent_text`) or direct Bedrock API (`agent_text_v3`)
+
+---
+
+## private-assistant-v2
+
+Next-generation architecture using [AWS End User Messaging](https://aws.amazon.com/end-user-messaging/) for native WhatsApp integration (no API Gateway required). Messages arrive via SNS, are routed to Lambda, and processed by an Amazon Bedrock Agent that maintains full conversation context.
+
+**Models:** `amazon.nova-pro-v1:0` (agent) · `us.amazon.nova-pro-v1:0` (multimodal via Converse API)
+
+**AWS Services:** Amazon Bedrock (Agents + Converse API) · AWS Lambda · Amazon DynamoDB · Amazon S3 · Amazon Transcribe · AWS End User Messaging · Amazon SNS
+
+**Key features:**
+- Processes images, video, audio, and documents in a single conversation thread
+- Amazon Bedrock Agent maintains context across message types
+- Video processed via S3 URI; images and documents via bytes
+- Audio transcribed with Amazon Transcribe then forwarded to the agent
+- Conversation history stored as `ConversationHistory` in DynamoDB for the Bedrock Agent session state
+
+---
+
+---
+
+## 🇻🇪🇨🇱 ¡Gracias!
+
+**[Eli](https://www.linkedin.com/in/lizfue/)**
+
+---
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING](CONTRIBUTING.md) for more information.
 
 ---
 
 ## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+If you discover a potential security issue in this project, notify AWS/Amazon Security via the [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public GitHub issue.
+
+---
 
 ## License
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+This library is licensed under the MIT-0 License. See the [LICENSE](LICENSE) file for details.

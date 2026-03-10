@@ -1,5 +1,5 @@
 ##########################################################################
-## This function queries anthropic.claude-3-sonnet - Q&A without memory ##
+## This function queries anthropic.claude-3-5-sonnet - Q&A without memory ##
 ##########################################################################
 
 import json

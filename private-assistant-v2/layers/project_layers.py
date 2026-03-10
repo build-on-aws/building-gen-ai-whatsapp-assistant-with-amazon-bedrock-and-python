@@ -10,10 +10,9 @@ class Layers(Construct):
         super().__init__(scope, construct_id, **kwargs)
 
         self._default_runtimes = [
-            aws_lambda.Runtime.PYTHON_3_8,
-            aws_lambda.Runtime.PYTHON_3_9,
             aws_lambda.Runtime.PYTHON_3_10,
-            aws_lambda.Runtime.PYTHON_3_11
+            aws_lambda.Runtime.PYTHON_3_11,
+            aws_lambda.Runtime.PYTHON_3_12
         ]
 
         # WhatsApp layer
