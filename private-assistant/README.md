@@ -1,6 +1,6 @@
 # Building a WhatsApp generative AI assistant with Amazon Bedrock and Python.
 
-With this WhatsApp demo app, you can chat in any language with a [Large language models (LLM)](https://community.aws/posts/how-to-choose-your-llm) on Amazon Bedrock. Send voice notes and receive transcriptions. By making a minor change in the code, you can also send the transcription to the model.
+With this WhatsApp demo app, you can chat in any language with a [Large language models (LLM)](https://community.aws/posts/how-to-choose-your-llm?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) on Amazon Bedrock. Send voice notes and receive transcriptions. By making a minor change in the code, you can also send the transcription to the model.
 
 >Your data will be securely stored in your AWS account and will not be shared or used for model training. It is not recommended to share private information because the security of data with WhatsApp is not guaranteed.
 
@@ -8,22 +8,22 @@ With this WhatsApp demo app, you can chat in any language with a [Large language
 ![Digrama parte 1](./imagenes/image_claude_v2.gif)**          
 
 
-### ** UPDATE: Power with [Anthropic's Claude 3.5](https://aws.amazon.com/bedrock/claude/)
+### ** UPDATE: Power with [Anthropic's Claude 3.5](https://aws.amazon.com/bedrock/claude/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 
 
 ✅ **AWS Level**: Advanced - 300   
 
 **Prerequisites:**
 
-- [AWS Account](https://aws.amazon.com/resources/create-account/?sc_channel=el&sc_campaign=datamlwave&sc_content=cicdcfnaws&sc_geo=mult&sc_country=mult&sc_outcome=acq) 
--  [Foundational knowledge of Python](https://catalog.us-east-1.prod.workshops.aws/workshops/3d705026-9edc-40e8-b353-bdabb116c89c/) 
+- [AWS Account](https://aws.amazon.com/resources/create-account/?sc_channel=el&sc_campaign=datamlwave&sc_content=cicdcfnaws&sc_geo=mult&sc_country=mult&sc_outcome=acq&trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) 
+-  [Foundational knowledge of Python](https://catalog.us-east-1.prod.workshops.aws/workshops/3d705026-9edc-40e8-b353-bdabb116c89c/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) 
 
 💰 **Cost to complete**: 
-- [Amazon Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/)
-- [Amazon Lambda Pricing](https://aws.amazon.com/lambda/pricing/)
-- [Amazon Transcribe Pricing](https://aws.amazon.com/transcribe/pricing/)
-- [Amazon DynamoDB Pricing](https://aws.amazon.com/dynamodb/pricing/)
-- [Amazon APIGateway Pricing](https://aws.amazon.com/api-gateway/pricing/)
+- [Amazon Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Amazon Lambda Pricing](https://aws.amazon.com/lambda/pricing/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Amazon Transcribe Pricing](https://aws.amazon.com/transcribe/pricing/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Amazon DynamoDB Pricing](https://aws.amazon.com/dynamodb/pricing/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Amazon APIGateway Pricing](https://aws.amazon.com/api-gateway/pricing/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 - [Whatsapp pricing](https://developers.facebook.com/docs/whatsapp/pricing/)
 
 ## How The App Works
@@ -34,9 +34,9 @@ With this WhatsApp demo app, you can chat in any language with a [Large language
 ![Digrama parte 1](./imagenes/1_step.jpg)
 
 1. WhatsApp receives the message: voice/text/image.
-2. [Amazon API Gateway](https://aws.amazon.com/api-gateway/) receives the message from the [WhatsApp webhook](https://business.whatsapp.com/blog/how-to-use-webhooks-from-whatsapp-business-api) (previously authenticated).
-3. Then, an [AWS Lambda Functions](https://aws.amazon.com/es/pm/lambda) named [whatsapp_in](/private-assistant/lambdas/code/whatsapp_in/lambda_function.py) processes the message and sends it to an [Amazon DynamoDB](https://aws.amazon.com/pm/dynamodb/) table named whatsapp-metadata to store it.
-4. The DynamoDB table whtsapp-metadata has a [DynamoDB streaming](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html) configured, which triggers the [process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function.
+2. [Amazon API Gateway](https://aws.amazon.com/api-gateway/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) receives the message from the [WhatsApp webhook](https://business.whatsapp.com/blog/how-to-use-webhooks-from-whatsapp-business-api) (previously authenticated).
+3. Then, an [AWS Lambda Functions](https://aws.amazon.com/es/pm/lambda?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) named [whatsapp_in](/private-assistant/lambdas/code/whatsapp_in/lambda_function.py) processes the message and sends it to an [Amazon DynamoDB](https://aws.amazon.com/pm/dynamodb/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) table named whatsapp-metadata to store it.
+4. The DynamoDB table whtsapp-metadata has a [DynamoDB streaming](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) configured, which triggers the [process_stream](/private-assistant/lambdas/code/process_stream/lambda_function.py) Lambda Function.
 
 ### 2 - Message processing:
 
@@ -51,7 +51,7 @@ In this application are 2 Lambda Functions that can fulfill this function, one t
 
 ![Digrama parte 1](./imagenes/2_1_step.jpg)
 
-1. The [audio_job_transcriptor](/private-assistant/lambdas/code/audio_job_transcriptor/lambda_function.py) Lambda Function is triggered. This Lambda Function downloads the WhatsApp audio from the link in the message in an [Amazon S3](https://aws.amazon.com/es/s3/) bucket, using Whatsapp Token authentication, then converts the audio to text using the Amazon Transcribe [start_transcription_job](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transcribe/client/start_transcription_job.html) API, which leaves the transcript file in an Output Amazon S3 bucket.
+1. The [audio_job_transcriptor](/private-assistant/lambdas/code/audio_job_transcriptor/lambda_function.py) Lambda Function is triggered. This Lambda Function downloads the WhatsApp audio from the link in the message in an [Amazon S3](https://aws.amazon.com/es/s3/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) bucket, using Whatsapp Token authentication, then converts the audio to text using the Amazon Transcribe [start_transcription_job](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/transcribe/client/start_transcription_job.html?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) API, which leaves the transcript file in an Output Amazon S3 bucket.
 
 Function that invokes audio_job_transcriptor looks like this:
 
@@ -73,7 +73,7 @@ def start_job_transciptor (jobName,s3Path_in,OutputKey,codec):
   
 ![Digrama parte 1](./imagenes/2_2_step.jpg)
 
-2. The [transcriber_done](/private-assistant/lambdas/code/transcriber_done/lambda_function.py) Lambda Function is triggered with an [Amazon S3 Event Notification put item](https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html) once the Transcribe Job is complete. It extracts the transcript from the Output S3 bucket and sends it to [whatsapp_out](/private-assistant/lambdas/code/transcriber_done/lambda_function.py) Lambda Function to respond to WhatsApp.
+2. The [transcriber_done](/private-assistant/lambdas/code/transcriber_done/lambda_function.py) Lambda Function is triggered with an [Amazon S3 Event Notification put item](https://docs.aws.amazon.com/AmazonS3/latest/userguide/EventNotifications.html?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) once the Transcribe Job is complete. It extracts the transcript from the Output S3 bucket and sends it to [whatsapp_out](/private-assistant/lambdas/code/transcriber_done/lambda_function.py) Lambda Function to respond to WhatsApp.
 
 > ✅ You have the option to uncomment the code in the [transcriber_done](/private-assistant/lambdas/code/transcriber_done/lambda_function.py) Lambda Function and send the voice note transcription to [langchain_agent_text](/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py) Lambda Function. 
 
@@ -128,7 +128,7 @@ The following is a friendly conversation between a human and an AI.
 ```
 4. Send the response to WhatsApp through `whatsapp_out` the Lambda Function.
 
-> 💡 The phrase **"Always reply in the original user language"** ensures that it always responds in the original language and the multilingual capacity is provided by [Anthropic Claude](https://aws.amazon.com/bedrock/claude/), which is the model used in this application.
+> 💡 The phrase **"Always reply in the original user language"** ensures that it always responds in the original language and the multilingual capacity is provided by [Anthropic Claude](https://aws.amazon.com/bedrock/claude/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el), which is the model used in this application.
 
 
 ## Let's build!
@@ -172,7 +172,7 @@ This agent manages conversation memory, and you must set the session time [here]
 if diferencia > 240:  #session time in seg
 `
 
-> **Tip:** [Kenton Blacutt](https://github.com/KBB99), an AWS Associate Cloud App Developer, collaborated with Langchain, creating the [Amazon Dynamodb based memory class](https://github.com/langchain-ai/langchain/pull/1058) that allows us to store the history of a langchain agent in an [Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html?sc_channel=el&sc_campaign=genaiwave&sc_content=working-with-your-live-data-using-langchain&sc_geo=mult&sc_country=mult&sc_outcome=acq).
+> **Tip:** [Kenton Blacutt](https://github.com/KBB99), an AWS Associate Cloud App Developer, collaborated with Langchain, creating the [Amazon Dynamodb based memory class](https://github.com/langchain-ai/langchain/pull/1058) that allows us to store the history of a langchain agent in an [Amazon DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html?sc_channel=el&sc_campaign=genaiwave&sc_content=working-with-your-live-data-using-langchain&sc_geo=mult&sc_country=mult&sc_outcome=acq&trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el).
 
 **To use the Lambda Function** [langchain_agent_text](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/lambdas/code/langchain_agent_text/lambda_function.py): change the `LAMBDA_AGENT_TEXT` environment variable in Lambda Function [process_stream](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/tree/main/private-assistant/lambdas/code/process_stream) in [private_assistant_stack](https://github.com/build-on-aws/building-gen-ai-whatsapp-assistant-with-amazon-bedrock-and-python/blob/main/private-assistant/private_assistant/private_assistant_stack.py): 
 
@@ -181,7 +181,7 @@ if diferencia > 240:  #session time in seg
 Fn.process_stream.add_environment(key='ENV_LAMBDA_AGENT_TEXT', value=Fn.langchain_agent_text.function_name)
 ```
 
-- Configure the [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- Configure the [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 
 - Deploy architecture with CDK [Follow steps:](/private-assistant/README.md)
 
@@ -224,7 +224,7 @@ cdk deploy
 
 ### Step 3: WhatsApp Configuration
 
-Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) [console](https://console.aws.amazon.com/secretsmanager/).
+Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) [console](https://console.aws.amazon.com/secretsmanager/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el).
 
 ![Digrama parte 1](imagenes/secret.png)
 
@@ -232,7 +232,7 @@ Edit WhatsApp configuration values in Facebook Developer in [AWS Secrets Manager
 
 ### Step 4: Webhook Configuration
 
-1. Go to [Amazon API Gateway Console](https://console.aws.amazon.com/apigateway)
+1. Go to [Amazon API Gateway Console](https://console.aws.amazon.com/apigateway?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 2. Click on `myapi`.
 3. Go to **Stages** -> **prod** -> **/cloudapi** -> **GET**, and copy **Invoke URL**. 
 
@@ -281,9 +281,9 @@ cdk destroy
 
 In this tutorial, you deployed a serverless WhatsApp application that allows users to interact with an LLM through Amazon Bedrock. This architecture uses API Gateway as a connection between WhatsApp and the application. Amazon Lambda functions process code to handle conversations. Amazon DynamoDB tables manage and store message information, session details, and conversation history.
 
-You now have the essential code to improve the application. One option moving forward is to incorporate [Retrieval-Augmented Generation (RAG)](https://aws.amazon.com/what-is/retrieval-augmented-generation/?nc1=h_ls) to generate more sophisticated responses depending on the context.
+You now have the essential code to improve the application. One option moving forward is to incorporate [Retrieval-Augmented Generation (RAG)](https://aws.amazon.com/what-is/retrieval-augmented-generation/?nc1=h_ls&trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) to generate more sophisticated responses depending on the context.
 
-To handle customer service scenarios, the application could connect to [Amazon Connect](https://aws.amazon.com/connect/features/) and transfer calls to an agent if the LLM cannot resolve an issue.
+To handle customer service scenarios, the application could connect to [Amazon Connect](https://aws.amazon.com/connect/features/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) and transfer calls to an agent if the LLM cannot resolve an issue.
 
 With further development, this serverless architecture demonstrates how conversational AI can power engaging and useful chat experiences on popular messaging platforms.
 
@@ -291,11 +291,11 @@ With further development, this serverless architecture demonstrates how conversa
 
 ## 🚀 Some links for you to continue learning and building:
 
-- [Get started with Amazon Connect](https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-get-started.html)
-- [Elevating Customer Support With a Whatsapp Assistant.](https://community.aws/content/2bgPgouKvLhinu8bcE4LZQ1nnwv/elevating-customer-support-with-a-whatsapp-travel-assistant-from-las-vegas-mexico-to-las-vegas-nevada-a-re-invent-2023-history)
+- [Get started with Amazon Connect](https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-get-started.html?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Elevating Customer Support With a Whatsapp Assistant.](https://community.aws/content/2bgPgouKvLhinu8bcE4LZQ1nnwv/elevating-customer-support-with-a-whatsapp-travel-assistant-from-las-vegas-mexico-to-las-vegas-nevada-a-re-invent-2023-history?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 - [RAG with history memory agents using Amazon Bedrock, Amazon Kendra, Amazon Lambda Function, and Amazon DynamoDB](https://github.com/build-on-aws/qa-agent-with-bedrock-kendra-and-history-memory)
-- [How To Choose Your LLM](https://community.aws/posts/how-to-choose-your-llm)
-- [Working With Your Live Data Using LangChain](https://community.aws/posts/working-with-your-live-data-using-langchain)
+- [How To Choose Your LLM](https://community.aws/posts/how-to-choose-your-llm?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
+- [Working With Your Live Data Using LangChain](https://community.aws/posts/working-with-your-live-data-using-langchain?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el)
 
 
 

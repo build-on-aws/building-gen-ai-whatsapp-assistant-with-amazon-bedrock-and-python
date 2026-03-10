@@ -1,6 +1,6 @@
 # AWS Generative AI WhatsApp Assistant Samples
 
-Sample implementations using [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) and Python for building WhatsApp AI assistants powered by Amazon Bedrock.
+Sample implementations using [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) and Python for building WhatsApp AI assistants powered by Amazon Bedrock.
 
 ## Projects
 
@@ -30,7 +30,7 @@ Classic serverless architecture using API Gateway as a WhatsApp webhook. Support
 
 ## private-assistant-v2
 
-Next-generation architecture using [AWS End User Messaging](https://aws.amazon.com/end-user-messaging/) for native WhatsApp integration (no API Gateway required). Messages arrive via SNS, are routed to Lambda, and processed by an Amazon Bedrock Agent that maintains full conversation context.
+Next-generation architecture using [AWS End User Messaging](https://aws.amazon.com/end-user-messaging/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el) for native WhatsApp integration (no API Gateway required). Messages arrive via SNS, are routed to Lambda, and processed by an Amazon Bedrock Agent that maintains full conversation context.
 
 **Models:** `amazon.nova-pro-v1:0` (agent) · `us.amazon.nova-pro-v1:0` (multimodal via Converse API)
 
@@ -61,7 +61,7 @@ Contributions are welcome! See [CONTRIBUTING](CONTRIBUTING.md) for more informat
 
 ## Security
 
-If you discover a potential security issue in this project, notify AWS/Amazon Security via the [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public GitHub issue.
+If you discover a potential security issue in this project, notify AWS/Amazon Security via the [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/?trk=87c4c426-cddf-4799-a299-273337552ad8&sc_channel=el). Please do **not** create a public GitHub issue.
 
 ---
 
